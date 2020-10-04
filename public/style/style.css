@@ -1,0 +1,10 @@
+*{
+    box-sizing: border-box;
+}
+.dropdown-menu-right {
+    right: 0;
+    float: right;
+}
+.title {
+    display: inline-block;
+}
