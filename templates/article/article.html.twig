@@ -8,7 +8,7 @@
     <div class="text-center">
     <h1>{{ article.name }}</h1>
     {% if article.image %}
-        <img class="mt-2" src="{{ asset(article.image) }}">
+        <img class="mt-2" style="max-width:1000px;" src="{{ asset(article.image) }}">
     {% endif %}
     <p class="mt-4">{{ article.content }}</p>
     <p class="text-right"><small>{{ article.editDateTime|date("d/m/Y") }} - {{ article.articleEditor.lastName }} {{ article.articleEditor.firstName }}</small></p>
