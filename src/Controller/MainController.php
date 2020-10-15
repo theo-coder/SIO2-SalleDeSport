@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\ContactType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
 {
@@ -37,6 +39,19 @@ class MainController extends AbstractController
     {
         return $this->render('article/article.html.twig', [
             'article' => $article,
+        ]);
+    }
+
+    /**
+     * @Route("/contact", name="contact")
+     */
+    public function contact(Request $request)
+    {
+        $form = $this->createForm(ContactType::class);
+
+        $form->handleRequest($request);
+        return $this->render('contact/contact.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

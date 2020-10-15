@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * @Route("/editor/article")
@@ -21,7 +22,7 @@ class EditorArticleController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository): Response
     {
-        return $this->render('article/index.html.twig', [
+        return $this->render('admin/article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
         ]);
     }
@@ -45,7 +46,7 @@ class EditorArticleController extends AbstractController
             $article->setArticleEditor($users);
 
 
-            
+
             if ($image) {
 
                 $newFileName = uniqid() . '.' . $image->guessExtension();
@@ -56,7 +57,6 @@ class EditorArticleController extends AbstractController
                         './image/article/',
                         $newFileName
                     );
-
                 } catch (FileException $e) {
                     //error
                 }
@@ -71,7 +71,7 @@ class EditorArticleController extends AbstractController
             return $this->redirectToRoute('article_index');
         }
 
-        return $this->render('article/new.html.twig', [
+        return $this->render('admin/article/new.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
         ]);
@@ -82,7 +82,7 @@ class EditorArticleController extends AbstractController
      */
     public function show(Article $article): Response
     {
-        return $this->render('article/show.html.twig', [
+        return $this->render('admin/article/show.html.twig', [
             'article' => $article,
         ]);
     }
@@ -110,9 +110,7 @@ class EditorArticleController extends AbstractController
                     if (@is_file($file[0])) {
                         @unlink($file[0]);
                     }
-
-                } catch
-                (FileException $e) {
+                } catch (FileException $e) {
                     $this->addFlash('danger', 'Something wrong... Please try again later');
                 }
 
@@ -122,7 +120,6 @@ class EditorArticleController extends AbstractController
                         'image/article/',
                         $newFileName
                     );
-
                 } catch (FileException $e) {
                     $this->addFlash('danger', 'Something wrong... Please try later');
                 }
@@ -135,7 +132,7 @@ class EditorArticleController extends AbstractController
             return $this->redirectToRoute('article_index');
         }
 
-        return $this->render('article/edit.html.twig', [
+        return $this->render('admin/article/edit.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
         ]);
@@ -146,7 +143,7 @@ class EditorArticleController extends AbstractController
      */
     public function delete(Request $request, Article $article): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);
             $entityManager->flush();

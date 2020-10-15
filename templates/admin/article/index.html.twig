@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ article.name }}</td>
                 <td>{{ article.category.name }}</td>
-                <td>{{ article.content }}</td>
+                <td>{{ article.content|u.truncate(200) }}</td>
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">Détails</a><br>
                     <a href="{{ path('article_edit', {'id': article.id}) }}">Modifier</a>
