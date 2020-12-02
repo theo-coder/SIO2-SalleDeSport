@@ -2,12 +2,12 @@
 ----
 
 #### Lot 1 - Visibilité de la salle :
-- [ ] Consulter : En tant que visiteur, je peux naviguer sur le site vitrine sans être connecté afin de découvrir la salle
-- [ ] Rédiger une page : En tant que rédacteur, je peux rédiger ou changer une page afin d'en informer les visiteurs
-- [ ] Gérer les rubriques : En tant que rédacteur, je peux gérer les différentes rubriques afin d'organiser la navigation
-- [ ] Gérer les rédacteurs : En tant qu'administrateur, je peux gérer les rédacteurs afin de les encadrer/administrer (créer, révoquer, renouveler le mot de passe)
+- [x] Consulter : En tant que visiteur, je peux naviguer sur le site vitrine sans être connecté afin de découvrir la salle
+- [x] Rédiger une page : En tant que rédacteur, je peux rédiger ou changer une page afin d'en informer les visiteurs
+- [x] Gérer les rubriques : En tant que rédacteur, je peux gérer les différentes rubriques afin d'organiser la navigation
+- [x] Gérer les rédacteurs : En tant qu'administrateur, je peux gérer les rédacteurs afin de les encadrer/administrer (créer, révoquer, renouveler le mot de passe)
 
-![0%](https://progress-bar.dev/0)
+![100%](https://progress-bar.dev/100)
 
 #### Lot 2 - Gestion commerciale lot 1 :
 - [ ] Contacter la salle : En tant que visiteur, je peux contacter la salle afin de poser mes questions
