@@ -22,20 +22,17 @@ class ArticleRepository extends ServiceEntityRepository
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
+    public function deleteRedactor($id)
+    {
+        $em = $this->getEntityManager()->getConnection();
+
+        $sql = 'UPDATE article SET article_editor_id=null where article_editor_id=?';
+        $stmt = $em->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        return $this;
+    }
     /*
     public function findOneBySomeField($value): ?Article
     {

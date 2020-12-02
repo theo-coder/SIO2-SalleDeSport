@@ -11,7 +11,7 @@
         <img class="mt-2" style="max-width:1000px;" src="{{ asset(article.image) }}">
     {% endif %}
     <p class="mt-4">{{ article.content }}</p>
-    <p class="text-right"><small>{{ article.editDateTime|date("d/m/Y") }} - {{ article.articleEditor.lastName }} {{ article.articleEditor.firstName }}</small></p>
+    <p class="text-right"><small>{{ article.editDateTime|date("d/m/Y") }} - {% if article.articleEditor and article.articleEditor %}{{ article.articleEditor.firstName }} {{ article.articleEditor.lastName }} {% else %} deleted user {% endif %}</small></p>
     </div>
 </div>
 

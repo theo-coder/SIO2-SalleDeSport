@@ -84,9 +84,13 @@ class EditorCategoryController extends AbstractController
     public function delete(Request $request, Category $category): Response
     {
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($category);
-            $entityManager->flush();
+            if (empty($category->getArticles()->toArray())) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($category);
+                $entityManager->flush();
+            } else {
+                $this->addFlash('error', 'Impossible d\'effectuer la suppression, il reste des articles dans la rubrique !');
+            }
         }
 
         return $this->redirectToRoute('category_index');

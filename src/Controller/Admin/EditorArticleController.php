@@ -42,7 +42,7 @@ class EditorArticleController extends AbstractController
 
 
 
-            $users = $repo->findAll()[0];
+            $users = $repo->findAll()[1];
             $article->setArticleEditor($users);
 
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Form\ContactType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
@@ -39,6 +40,15 @@ class MainController extends AbstractController
     {
         return $this->render('article/article.html.twig', [
             'article' => $article,
+        ]);
+    }
+    /**
+     * @Route("/category/{id}", name="category")
+     */
+    public function category(Category $category)
+    {
+        return $this->render('category/category.html.twig', [
+            'category' => $category,
         ]);
     }
 
