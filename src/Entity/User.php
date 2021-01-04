@@ -6,11 +6,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="Il y a deja un compte avec cet email")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -20,7 +24,9 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\Email(message="Adresse email invalide")
+     * @Assert\NotBlank(message="Veuillez saisir une adresse email")
      */
     private $email;
 
@@ -30,17 +36,20 @@ class User
     private $roles = ['ROLE_USER'];
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom est obligatoire")
      */
     private $lastName;
 
@@ -88,7 +97,15 @@ class User
     {
         return $this->email;
     }
-
+    /**
+     * A visual identifier that represents this user.
+     * 
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -96,10 +113,13 @@ class User
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getRoles(): ?array
     {
         $roles = $this->roles;
-        $roles[]='ROLE_USER';
+        $roles[] = 'ROLE_USER';
         return array_unique($roles);
     }
 
@@ -109,10 +129,12 @@ class User
 
         return $this;
     }
-
+    /**
+     * @see UserInterface
+     */
     public function getPassword(): ?string
     {
-        return $this->password;
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -126,7 +148,20 @@ class User
     {
         return $this->firstName;
     }
-
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+    }
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
